@@ -1,0 +1,8 @@
+target/
+.workspace/
+*.log
+*.out
+.DS_Store
+.idea/
+*.iml
+.advisor/

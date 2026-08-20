@@ -1,0 +1,14 @@
+🚀 Existing build-configuration is already up-to-date
+🏃 Fetching and processing upgrade plan details [00m 00s]
+🏃 Fetching and processing upgrade plan details [00m 01s] ok
+The projects ["spring-framework", "spring-boot", "jackson-annotations", "jackson"] could not be included in the Upgrade Plan because they are used as transitive dependencies for other projects, and no upgrades are configured for them.
+Please request your administrator to configure the projects of the following dependencies:
+	- io.pivotal.spring.cloud:cloudfoundry-certificate-truster
+		uses:
+			- spring-framework
+		blocking upgrades for:
+			- spring-boot
+			- jackson-annotations
+			- jackson
+In order to learn more about publishing upgrade mappings, visit https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/tanzu-spring/commercial/spring-tanzu/app-advisor-custom-upgrades.html
+No upgrade plans available - your project seems to be up to date.

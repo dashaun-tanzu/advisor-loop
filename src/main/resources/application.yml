@@ -1,0 +1,79 @@
+advisor:
+  # GitHub organizations. Overridable at runtime with --orgs=foo,bar
+  orgs: [dashaun-demo]
+  github-host: github.com
+  # GitLab groups. Overridable at runtime with --groups=x,y
+  gitlab:
+    groups: []
+    host: gitlab.com
+    binary: glab
+    include-subgroups: true
+  # A bot PR at least this old is deleted and recreated.
+  staleness: PT24H
+  # Everything the bot does lives under here, relative to the working directory.
+  workspace: ${user.dir}/.workspace
+  bot-prefix: "[AdvisorBot]"
+  advisor-binary: advisor
+  git-binary: git
+  gh-binary: gh
+  default-branch-fallback: main
+  # Advisor announces unmappable dependencies on the SUCCESS path of `upgrade-plan get`, never as
+  # an error, and follows the list with "No upgrade plans available". This phrase is how we find it.
+  unmapped-marker: 'configure the projects of the following dependencies'
+  skip-archived: true
+  # dashaun-demo is entirely forks, so this defaults to false; set true to ignore forks.
+  skip-forks: false
+  dry-run: false
+  mappings:
+    dir-name: mappings
+    work-dir-name: .mapping-work
+    # "override" layers our mappings on top of the built-in ones instead of replacing them,
+    # which is what stops a generated mapping from colliding with one advisor already ships.
+    merge-strategy: override
+  branches:
+    upgrade-prefix: advisorbot/upgrade-
+    patch-prefix: advisorbot/patch-
+  process:
+    timeout-per-command: PT15M
+  git:
+    user-name: AdvisorBot
+    user-email: advisorbot@dashaun.dev
+  error-rules:
+    - pattern: 'no\s+mapping\s+(?:file\s+)?(?:was\s+)?(?:found|available|defined)\s+for\s+.{0,40}?([\w.\-]+:[\w.\-]+)'
+      kind: MISSING_MAPPING
+      coord-group: 1
+    - pattern: 'mapping\s+(?:is\s+)?not\s+found.{0,40}?([\w.\-]+:[\w.\-]+)'
+      kind: MISSING_MAPPING
+      coord-group: 1
+    - pattern: 'missing\s+mapping.{0,40}?([\w.\-]+:[\w.\-]+)'
+      kind: MISSING_MAPPING
+      coord-group: 1
+    - pattern: 'could\s+not\s+find\s+(?:a\s+)?mapping.{0,40}?([\w.\-]+:[\w.\-]+)'
+      kind: MISSING_MAPPING
+      coord-group: 1
+    - pattern: 'unsupported\s+(?:library|dependency).{0,40}?([\w.\-]+:[\w.\-]+)'
+      kind: MISSING_MAPPING
+      coord-group: 1
+    # Anything wrong with the mapping files themselves rolls back the newest mapping.
+    - pattern: '(?:duplicate|conflicting|overlapping|ambiguous)\s+\w*\s*mapping'
+      kind: BAD_MAPPING
+      coord-group: 0
+    - pattern: 'mapping[^\n]{0,60}(?:duplicate|conflict|overlap|ambiguous|invalid|malformed)'
+      kind: BAD_MAPPING
+      coord-group: 0
+    - pattern: '(?:failed|unable)\s+to\s+(?:parse|read|load|deserialize)[^\n]{0,60}mapping'
+      kind: BAD_MAPPING
+      coord-group: 0
+    - pattern: 'SPRING_ADVISOR_MAPPING_CUSTOM'
+      kind: BAD_MAPPING
+      coord-group: 0
+
+spring:
+  application:
+    name: advisor-loop
+  main:
+    banner-mode: off
+
+# Logging is configured in logback-spring.xml: nothing goes to the console (the activity table
+# owns it), everything goes to <workspace>/advisor-loop.log. Override the path with
+# ADVISOR_LOOP_LOG if you want it elsewhere.

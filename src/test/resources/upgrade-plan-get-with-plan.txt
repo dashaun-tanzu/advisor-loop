@@ -1,0 +1,40 @@
+
+🚀 Existing build-configuration is already up-to-date
+
+
+🏃 Fetching and processing upgrade plan details [00m 00s]🏃 Fetching and processing upgrade plan details [00m 01s] ok
+
+Projects discovered:
+	- junit: 5.8.x → 6.0.x
+	- jackson: 2.13.x → 3.1.x
+	- jackson-annotations: 2.13.x → 2.21.x
+	- hibernate-orm: 5.6.x → 7.4.x
+	- junit-platform: 1.8.x → 6.0.x
+	- spring-data-commons: 2.7.x → 4.1.x
+	- spring-boot: 2.7.x → 4.1.x
+	- spring-framework: 5.3.x → 7.0.x
+	- xmlunit: 2.9.x → 2.11.x
+	- spring-data-jpa: 2.7.x → 4.1.x
+	- mockito: 4.5.x → 5.23.x
+	- micrometer: 1.9.x → 1.17.x
+
+Upgrade Plan for your Dependencies:
+	- Step 1:
+		* Upgrade java from 8 to 11
+	- Step 2:
+		* Upgrade java from 11 to 17
+	- Step 3:
+		* Upgrade junit from 5.8.x to 5.9.x
+		* Upgrade jackson from 2.13.x to 2.14.x
+		* Upgrade jackson-annotations from 2.13.x to 2.14.x
+		* Upgrade hibernate-orm from 5.6.x to 6.1.x
+		* Upgrade junit-platform from 1.8.x to 1.9.x
+		* Upgrade spring-data-commons from 2.7.x to 3.0.x
+		* Upgrade spring-boot from 2.7.x to 3.0.x
+		* Upgrade spring-framework from 5.3.x to 6.0.x
+		* Upgrade spring-data-jpa from 2.7.x to 3.0.x
+		* Upgrade mockito from 4.5.x to 4.8.x
+		* Upgrade micrometer from 1.9.x to 1.10.x
+	- Step 4:
+		* Upgrade jackson from 2.14.x to 2.15.x
+		* Upgrade jackson-annotations from 2.14.x to 2.15.x
